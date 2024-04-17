@@ -22,7 +22,7 @@ node_modules/
 /.cache
 
 # .gitignore
-
+/static/
 # dependencies
 # /node_modules
 
