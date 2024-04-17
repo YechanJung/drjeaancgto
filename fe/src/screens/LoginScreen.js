@@ -20,8 +20,35 @@ function LoginScreen() {
     if (userInfo) {
       navigate(redirect);
     }
-  }
-    , [navigate, userInfo, redirect]);
+  }, [navigate, userInfo, redirect]);
+  // useEffect(() => {
+  //   if (window.grecaptcha) {
+  //     window.grecaptcha.enterprise.ready(async () => {
+  //       try {
+  //         const token = await window.grecaptcha.enterprise.execute(
+  //           "6LdxUbwpAAAAAN5oiXMW23GXAXcF4KXG_kZ6l62-",
+  //           { action: "LOGIN" }
+  //         );
+  //         const response = await fetch("/api/login/", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({ token }),
+  //         });
+
+  //         if (!response.ok) {
+  //           throw new Error("Server response was not ok");
+  //         }
+
+  //         const data = await response.json();
+  //         // use the data...
+  //       } catch (error) {
+  //         console.error("Failed to execute reCAPTCHA or fetch:", error);
+  //       }
+  //     });
+  //   }
+  // }, [submitHandler]);
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("LOGIN");
@@ -37,8 +64,8 @@ function LoginScreen() {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-        {error && <Message variant="danger">{error}</Message>}
-        {loading && <Loading />}
+      {error && <Message variant="danger">{error}</Message>}
+      {loading && <Loading />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -75,3 +102,4 @@ function LoginScreen() {
 }
 
 export default LoginScreen;
+

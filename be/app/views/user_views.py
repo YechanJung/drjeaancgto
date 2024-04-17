@@ -53,6 +53,39 @@ def updateUserProfile(request):
         user.password = make_password(data['password'])
     user.save()
     return Response(serializer.data)
+# from google.cloud import recaptchaenterprise_v1
+# from google.cloud.recaptchaenterprise_v1 import Assessment
+
+# create_assessment function...
+
+# @api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+# def updateUserProfile(request):
+#     user = request.user
+#     data = request.data
+
+#     # Verify the reCAPTCHA token
+#     recaptcha_token = data.get('recaptcha_token')
+#     if not recaptcha_token:
+#         return Response({'detail': 'No reCAPTCHA token provided'}, status=400)
+
+#     project_id = 'your-project-id'  # replace with your project ID
+#     recaptcha_key = 'your-recaptcha-key'  # replace with your reCAPTCHA key
+#     recaptcha_action = 'updateUserProfile'  # replace with the actual action
+#     assessment = create_assessment(project_id, recaptcha_key, recaptcha_token, recaptcha_action)
+
+#     if not assessment or assessment.risk_analysis.score < 0.5:  # adjust the score as needed
+#         return Response({'detail': 'reCAPTCHA verification failed'}, status=400)
+
+#     # Update the user profile
+#     serializer = UserSerializerWithToken(user, many=False)
+#     user.first_name = data['name']
+#     user.username = data['email']
+#     user.email = data['email']
+#     if data['password'] != '':
+#         user.password = make_password(data['password'])
+#     user.save()
+#     return Response(serializer.data)
 
 # rest of your code
 @api_view(['GET'])

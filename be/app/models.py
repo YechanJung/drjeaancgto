@@ -10,6 +10,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True,
                               default='/placeholder.png')
     brand = models.CharField(max_length=200, null=True, blank=True)
+    # category = models.ForeignKey(Category, on_delete=models.SET_NULL, max_length=200, null=True, blank=True)
     category = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     rating = models.DecimalField(
@@ -23,7 +24,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
@@ -83,6 +83,7 @@ class ShippingAddress(models.Model):
     shippingPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
     _id = models.AutoField(primary_key=True, editable=False)
+    # paymentMethod = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return str(self.address)
