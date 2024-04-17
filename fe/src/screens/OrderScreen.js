@@ -42,28 +42,21 @@ function OrderScreen() {
 </script> */
   }
   const addPaypalScript = () => {
-    console.log("addPaypalScript");
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src =
-      "https://www.paypal.com/sdk/js?client-id=AS3xj6leNN-hC_R9MLusXInulu3tpvkAOZjlzHjZ8y5n3pPmOfSDUihzHd7vKfxCjARjqaBKudUbcDHf&components=hosted-buttons&disable-funding=venmo&currency=USD";
-    script.async = true;
-    script.onload = () => {
+    
+    window.onload = () => {
       setSdkReady(true);
     };
-    document.body.appendChild(script);
+   
   };
   useEffect(() => {
     if (!order || successPay || order._id !== Number(orderId)) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPaypalScript();
-      } else {
+      
         setSdkReady(true);
       }
-    }
+    
   }, [orderId, order, dispatch, successPay]);
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
@@ -184,21 +177,8 @@ function OrderScreen() {
                   {!sdkReady ? (
                     <Loading />
                   ) : (
-                    // <PayPalScriptProvider
-                    //   options={{
-                    //     "client-id": "AS3xj6leNN-hC_R9MLusXInulu3tpvkAOZjlzHjZ8y5n3pPmOfSDUihzHd7vKfxCjARjqaBKudUbcDHf",
-                    //     currency: "USD",
-                    //   }}
-                    // >
-                    // <PayPalButton
-                    //   amount={order.totalPrice}
-                    //   onSuccess={successPaymentHandler}
-                    // >
-                    //   Pay
-                    // </PayPalButton>
-                    // </PayPalScriptProvider>
                     <div
-                      id="paypal-container-TN55BRLX2EUV6"
+                    id="paypal-container-U9DKC2ADCW48W"
                       amount={order.totalPrice}
                       onSuccess={successPaymentHandler}
                     ></div>

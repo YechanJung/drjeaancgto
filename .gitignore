@@ -10,7 +10,6 @@
 node_modules/
 # production
 /build
-# .gitignore
 
 # dependencies
 # /node_modules

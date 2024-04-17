@@ -50,6 +50,19 @@ def addOrderItems(response):
         # (4)update product countInStock
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyOrders(request):
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getOrderById(request, pk):
