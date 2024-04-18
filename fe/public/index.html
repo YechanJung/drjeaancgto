@@ -30,10 +30,23 @@
   src="https://www.paypal.com/sdk/js?client-id=BAAlk163sc2h2lQm8qEByWrenNtMVqyMTWU2WK2hVciR64ip1CkJlOT2sUWhxu8j3THpouKl8ToOfbqV78&components=hosted-buttons&disable-funding=venmo&currency=USD" 
   crossorigin="anonymous" 
   async> -->
+
+<script
+  src="https://www.paypal.com/sdk/js?client-id=BAAlk163sc2h2lQm8qEByWrenNtMVqyMTWU2WK2hVciR64ip1CkJlOT2sUWhxu8j3THpouKl8ToOfbqV78&components=hosted-buttons&disable-funding=venmo&currency=USD" 
+  crossorigin="anonymous" 
+  async>
 </script>
     <title>shop</title>
   </head>
   <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        paypal.HostedButtons({
+          hostedButtonId: "G79NBA9VRJHP4"
+        })
+        .render("#paypal-container-G79NBA9VRJHP4")
+      })
+    </script>
     <!-- <script>
       document.addEventListener("DOMContentLoaded", (event) => {
         paypal.HostedButtons({
@@ -41,7 +54,7 @@
         })
         .render("#paypal-container-U9DKC2ADCW48W")
       }) -->
-    </script>
+    <!-- </script> -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

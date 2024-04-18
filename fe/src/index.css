@@ -26,14 +26,16 @@ h3{
 }
 @media (max-width: 768px) {
 .filter-form{
-    margin-right:30px;
+    margin-right:px;
     margin-top:10rem;
 }}
 .small-input-group .form-control,
 .small-input-group .input-group-text {
   height: 30px;
   font-size: 12px;
-  width: 20px;
+  width: auto;
+  margin-right: 0px;
+  margin-left: -50px
 }
 .clearfix::after {
     content: "";

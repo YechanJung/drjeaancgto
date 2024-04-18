@@ -140,14 +140,17 @@ function PlaceOrderScreen() {
               {error && <Message variant="danger">{error}</Message>}
 
               <ListGroup.Item>
-                <Button
+              <div id="paypal-container-G79NBA9VRJHP4"
+              disabled={cart.cartItems === 0}
+              onclick={placeOrderHandler}></div>
+                {/* <Button
                   type="button"
                   className="btn-block"
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >
                   Place Order
-                </Button>
+                </Button> */}
               </ListGroup.Item>
             </ListGroup>
           </Card>
