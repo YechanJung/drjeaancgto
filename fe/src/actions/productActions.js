@@ -25,10 +25,10 @@ import {
 
 } from "../constants/productConstants";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (query='') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const res = await fetch("/api/products");
+    const res = await fetch(`/api/products?query=${query}`);
     const data = await res.json();
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navbar, Container, Nav, NavDropdown, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";  
+import SearchBox from "./SearchBox";
 function Header() {
 
 const userLogin = useSelector((state) => state.userLogin);
@@ -19,21 +20,13 @@ const logoutHandler = () => {
 
   return (
     <header>
-      <>
-        <Navbar bg="primary" data-bs-theme="dark">
+       <Navbar bg="primary" data-bs-theme="dark">
+     
           <Container>
             <LinkContainer to="/">
               <Navbar.Brand>shop</Navbar.Brand>
             </LinkContainer>
-            <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="mr-2 search-input"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+            <SearchBox />
             <Nav className="mr-auto">
               {cartItems && cartItems.length > 0 ? (
               <LinkContainer to="/cart">
@@ -76,7 +69,6 @@ const logoutHandler = () => {
             </Nav>
           </Container>
         </Navbar>
-      </>
     </header>
   );
 }
