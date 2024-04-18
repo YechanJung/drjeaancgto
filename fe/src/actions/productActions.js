@@ -64,7 +64,8 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const res = await fetch(`/api/products/${id}`, config);
+    const res = await fetch(`/api/products/delete/${id}`, config);
+    const data = await res.json();
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
     dispatch({
@@ -88,7 +89,7 @@ export const createProduct = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const res = await fetch(`/api/products/`, config);
+    const res = await fetch(`/api/products/create/`, config);
     const data = await res.json();
     dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data });
   } catch (error) {
@@ -114,7 +115,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       },
       body: JSON.stringify(product),
     };
-    const res = await fetch(`/api/products/${product._id}`, config);
+    const res = await fetch(`/api/products/update/${product._id}/`, config);
     const data = await res.json();
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
   } catch (error) {

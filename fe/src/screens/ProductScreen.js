@@ -14,6 +14,8 @@ function Productcreen() {
   const { id } = useParams();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
 
 
@@ -95,14 +97,19 @@ function Productcreen() {
                 </ListGroup.Item>
               )}
               <ListGroup.Item>
-                <Button
-                  onClick={addToCartHandler}
-                  className="btn-block"
-                  type="button"
-                  disabled={product.countInStock === 0}
-                >
-                  Add to Cart
-                </Button>
+                {!userInfo ? (
+                  <Link to="/login">
+                    <Button className="btn-block">Login to Add to Cart</Button>
+                  </Link>
+                ) : <Button
+                onClick={addToCartHandler}
+                className="btn-block"
+                type="button"
+                disabled={product.countInStock === 0}
+              >
+                Add to Cart
+              </Button>}
+                
               </ListGroup.Item>
             </ListGroup>
           </Card>

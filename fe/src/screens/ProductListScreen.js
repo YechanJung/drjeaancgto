@@ -6,7 +6,8 @@ import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "../components/Loading";
-import { listProducts, deleteProduct} from "../actions/productActions";
+import { listProducts, deleteProduct, createProduct} from "../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants"; 
 
 function ProductListScreen() {
     const dispatch = useDispatch();
@@ -18,19 +19,24 @@ function ProductListScreen() {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const productDelete = useSelector((state) => state.productDelete);
-    const { success: successDelete } = productDelete;
+    const { loading: loadingDelete, error: errorDelete ,success: successDelete } = productDelete;
     const productCreate = useSelector((state) => state.productCreate);
-    const { success: successCreate, product: createdProduct } = productCreate;
+    const { loading:loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate;
     const productUpdate = useSelector((state) => state.productUpdate);
     const { success: successUpdate } = productUpdate;
     useEffect(() => {
-        if(userInfo && userInfo.isAdmin) {
-        dispatch(listProducts());
-        } else {
-        navigate("/login");
+      dispatch({ type: PRODUCT_CREATE_RESET });
+        if(!userInfo.isAdmin) {
+            navigate("/login");
         }
+        if(successCreate){
+            navigate(`/admin/product/${createdProduct._id}/edit`);
+        }else{
+          dispatch(listProducts());
+        }
+
     }
-    , [dispatch, navigate, userInfo]);
+    , [dispatch, navigate, userInfo, successDelete, successCreate, successUpdate ]);
     const deleteHandler = (id) => {   
         if(window.confirm("Are you sure?")){
           dispatch(deleteProduct(id));
@@ -39,7 +45,8 @@ function ProductListScreen() {
           redirect("/admin/productlist"); 
         }
     }
-    const createProductHandler = (product) => {
+    const createProductHandler = () => {
+      dispatch(createProduct());
         // dispatch(createProduct(product));
     }
   return (
@@ -55,6 +62,10 @@ function ProductListScreen() {
       </Button>
     </Col>
     </Row>
+    {loadingDelete && <Loading /> }
+    {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+    {loadingCreate && <Loading /> }
+    {errorCreate && <Message variant="danger">{errorCreate}</Message>}
     {loading ? (
       <Loading />
     ) : error ? (

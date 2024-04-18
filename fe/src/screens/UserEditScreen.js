@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { login } from "../actions/userActions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 import FormContainer from "../components/FormContainer";
@@ -16,14 +15,10 @@ function UserEditScreen() {
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
   const userUpdate = useSelector((state) => state.userUpdate);
   const { error:errorUpdate, loading:loadingUpdate, success:successUpdate } = userUpdate;
-  const redirect = location.search ? location.search.split("=")[1] : "/";
   useEffect(() => {
     if(successUpdate){
       dispatch({type: USER_UPDATE_RESET})
@@ -38,7 +33,7 @@ function UserEditScreen() {
       }
     }
 
-  }, [user, UserId, dispatch]);
+  }, [user, UserId, dispatch, successUpdate, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

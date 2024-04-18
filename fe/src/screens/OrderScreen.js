@@ -12,8 +12,8 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
-import { getOrderDetails, payOrder } from "../actions/orderActions";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import { getOrderDetails, payOrder, deliverOrder } from "../actions/orderActions";
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants";
 
 function OrderScreen() {
   const orderId = useParams().id;
@@ -25,6 +25,10 @@ function OrderScreen() {
   const { order, loading, error } = orderDetail;
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   if (!loading && !error) {
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -49,18 +53,23 @@ function OrderScreen() {
    
   };
   useEffect(() => {
-    if (!order || successPay || order._id !== Number(orderId)) {
+    if (!order || successPay || order._id !== Number(orderId) || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       
         setSdkReady(true);
       }
     
-  }, [orderId, order, dispatch, successPay]);
+  }, [orderId, order, dispatch, successPay, successDeliver]);
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
   };
+  const deleverHandler = () => {  
+    dispatch(deliverOrder(order));
+  }
 
   return loading ? (
     <Loading />
@@ -186,6 +195,19 @@ function OrderScreen() {
                 </ListGroup.Item>
               )}
             </ListGroup>
+            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              <ListGroup.Item>
+                {loadingDeliver && <Loading />}
+                <Button
+                  type="button"
+                  className="btn btn-block"
+                  onClick={deleverHandler}
+                >
+                  Mark As Delivered
+                </Button>
+              </ListGroup.Item>
+            )
+            }
           </Card>
         </Col>
       </Row>

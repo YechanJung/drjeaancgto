@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
-import FormContainer from "../components/FormContainer";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import { listMyOrders } from "../actions/orderActions";
