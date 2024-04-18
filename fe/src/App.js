@@ -17,11 +17,13 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import Filter from "./components/Filter";
 
 function App() {
   return (
     <Router>
       <Header />
+      {/* <Filter  /> */}
       <main className="py-3">
         <Container>
           <Routes>

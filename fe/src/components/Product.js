@@ -18,8 +18,8 @@ function Product({ product }) {
 
                 <Card.Text as="div">
                     <div className="my-3">
-                      
-                          {product.rating} <Rating
+                        {product.rating} 
+                        <Rating
                             value={product.rating}
                             text={`${product.numReviews} reviews`}
                             color={"#f8e825"}

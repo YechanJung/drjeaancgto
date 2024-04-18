@@ -12,8 +12,15 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
-import { getOrderDetails, payOrder, deliverOrder } from "../actions/orderActions";
-import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from "../actions/orderActions";
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from "../constants/orderConstants";
 
 function OrderScreen() {
   const orderId = useParams().id;
@@ -35,41 +42,37 @@ function OrderScreen() {
       0
     );
   }
-  // AS3xj6leNN-hC_R9MLusXInulu3tpvkAOZjlzHjZ8y5n3pPmOfSDUihzHd7vKfxCjARjqaBKudUbcDHf
-  {
-    /* <script src="https://www.paypal.com/sdk/js?client-id=BAAlk163sc2h2lQm8qEByWrenNtMVqyMTWU2WK2hVciR64ip1CkJlOT2sUWhxu8j3THpouKl8ToOfbqV78&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-<div id="paypal-container-TN55BRLX2EUV6"></div>
-<script>
-  paypal.HostedButtons({
-    hostedButtonId: "TN55BRLX2EUV6",
-  }).render("#paypal-container-TN55BRLX2EUV6")
-</script> */
-  }
+
   const addPaypalScript = () => {
-    
     window.onload = () => {
       setSdkReady(true);
     };
-   
   };
   useEffect(() => {
-    if (!order || successPay || order._id !== Number(orderId) || successDeliver) {
-      dispatch({ type: ORDER_PAY_RESET });
-      dispatch({ type: ORDER_DELIVER_RESET });
+    if (!userInfo) {
+      navigate("/login");
+    } else {
+      if (
+        !order ||
+        successPay ||
+        order._id !== Number(orderId) ||
+        successDeliver
+      ) {
+        dispatch({ type: ORDER_PAY_RESET });
+        dispatch({ type: ORDER_DELIVER_RESET });
 
-      dispatch(getOrderDetails(orderId));
-    } else if (!order.isPaid) {
-      
+        dispatch(getOrderDetails(orderId));
+      } else if (!order.isPaid) {
         setSdkReady(true);
       }
-    
+    }
   }, [orderId, order, dispatch, successPay, successDeliver]);
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
   };
-  const deleverHandler = () => {  
+  const deleverHandler = () => {
     dispatch(deliverOrder(order));
-  }
+  };
 
   return loading ? (
     <Loading />
@@ -187,7 +190,7 @@ function OrderScreen() {
                     <Loading />
                   ) : (
                     <div
-                    id="paypal-container-U9DKC2ADCW48W"
+                      id="paypal-container-U9DKC2ADCW48W"
                       amount={order.totalPrice}
                       onSuccess={successPaymentHandler}
                     ></div>
@@ -195,19 +198,21 @@ function OrderScreen() {
                 </ListGroup.Item>
               )}
             </ListGroup>
-            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-              <ListGroup.Item>
-                {loadingDeliver && <Loading />}
-                <Button
-                  type="button"
-                  className="btn btn-block"
-                  onClick={deleverHandler}
-                >
-                  Mark As Delivered
-                </Button>
-              </ListGroup.Item>
-            )
-            }
+            {userInfo &&
+              userInfo.isAdmin &&
+              order.isPaid &&
+              !order.isDelivered && (
+                <ListGroup.Item>
+                  {loadingDeliver && <Loading />}
+                  <Button
+                    type="button"
+                    className="btn btn-block"
+                    onClick={deleverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>
+              )}
           </Card>
         </Col>
       </Row>

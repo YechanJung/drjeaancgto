@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";  
 function Header() {
@@ -25,6 +25,15 @@ const logoutHandler = () => {
             <LinkContainer to="/">
               <Navbar.Brand>shop</Navbar.Brand>
             </LinkContainer>
+            <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="mr-2 search-input"
+              aria-label="Search"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
             <Nav className="mr-auto">
               {cartItems && cartItems.length > 0 ? (
               <LinkContainer to="/cart">
