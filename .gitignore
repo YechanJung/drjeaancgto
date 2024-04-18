@@ -21,7 +21,7 @@ node_modules/
 /.cache
 
 # .gitignore
-/static/
+static/
 # dependencies
 # /node_modules
 
