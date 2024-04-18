@@ -82,7 +82,7 @@ function Filter() {
 </InputGroup>
         </div>
     </Form>
-      </Col>
+      </Col> 
  
   </Row>
   );
