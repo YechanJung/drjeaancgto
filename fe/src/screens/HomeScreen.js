@@ -9,6 +9,7 @@ import Message from "../components/Message";
 import Filter from "../components/Filter";
 import Star from "../components/Star";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 function HomeScreen() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ function HomeScreen() {
   , [dispatch, query, page]);
     return (
       <div>
-        <Star />
+        {!query && <ProductCarousel />}
+        
         <Row>
           <Col md={3}>
             <Filter />
