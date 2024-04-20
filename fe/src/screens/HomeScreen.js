@@ -12,33 +12,17 @@ import Paginate from "../components/Paginate";
 function HomeScreen() {
   const location = useLocation();
   const dispatch = useDispatch();
-  // const dispatch = useDispatch(listProducts());
   const productList = useSelector(state => state.productList);
-  const { loading, error, products, page, pages } = productList;
-  // const [hasDispatched, setHasDispatched] = useState(false);
-
-  // let search_query = location.search;
-  // console.log("page:",page);  
-  // console.log("pages:",pages);
+  const { loading, error, products, pages } = productList;
   const params = new URLSearchParams(location.search);
-  // let query = search_query.split('=')[1];
   const query = params.get('query') || '';
-  // const page1 = params.get('page') || 1;
+  const page = params.get('page') || 1;
   useEffect(() => {
     console.log("query:",query);
     console.log("page:",page);
-    dispatch(listProducts(query));
+    dispatch(listProducts(query, page));
   }
-  , [dispatch, query]);
-  // const values = location.search
-  // const page = values.page || 1;
-  // useEffect(() => {
-  //   dispatch(listProducts(page));
-
-  // },
-  // [dispatch, page]);
-  // const products = []
-
+  , [dispatch, query, page]);
     return (
       <div>
         <Star />
@@ -63,7 +47,9 @@ function HomeScreen() {
             )}
           </Col>
         </Row>
+        <div className="pagination-container">
         <Paginate pages={pages} page={page} keyword={query} />
+      </div>
       </div>
     );
   

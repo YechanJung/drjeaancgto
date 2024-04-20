@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation, redirect } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { login } from "../actions/userActions";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "../components/Loading";
 import { listProducts, deleteProduct, createProduct} from "../actions/productActions";
@@ -11,11 +12,12 @@ import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 
 function ProductListScreen() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const navigate = useNavigate();
     const redirect = location.search ? location.search.split("=")[1] : "/";
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products } = productList;
+    const { loading, error, products, pages } = productList;
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const productDelete = useSelector((state) => state.productDelete);
@@ -24,6 +26,8 @@ function ProductListScreen() {
     const { loading:loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate;
     const productUpdate = useSelector((state) => state.productUpdate);
     const { success: successUpdate } = productUpdate;
+    const page = params.get('page') || 1;
+    let keyword = params.get('query') || '';
     useEffect(() => {
       dispatch({ type: PRODUCT_CREATE_RESET });
         if(!userInfo.isAdmin) {
@@ -32,11 +36,11 @@ function ProductListScreen() {
         if(successCreate){
             navigate(`/admin/product/${createdProduct._id}/edit`);
         }else{
-          dispatch(listProducts());
+          dispatch(listProducts(keyword, page));
         }
 
     }
-    , [dispatch, navigate, userInfo, successDelete, successCreate, successUpdate ]);
+    , [dispatch, navigate, userInfo, successDelete, successCreate, successUpdate, createdProduct, keyword, page]);
     const deleteHandler = (id) => {   
         if(window.confirm("Are you sure?")){
           dispatch(deleteProduct(id));
@@ -70,7 +74,7 @@ function ProductListScreen() {
       <Loading />
     ) : error ? (
       <Message variant="danger">{error}</Message>
-    ) : (
+    ) : (<div>
       <Table striped bordered hover responsive className="table-sm">
         <thead>
           <tr>
@@ -108,6 +112,8 @@ function ProductListScreen() {
           ))}
         </tbody>
       </Table>
+      <Paginate pages={pages} page={page} keyword="" isAdmin={true} />
+      </div>
     )}
     </div>
   )

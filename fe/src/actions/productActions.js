@@ -87,10 +87,10 @@ import {
 //     });
 //   }
 // };
-export const listProducts = (query = '') => async (dispatch) => {
+export const listProducts = (query = '', page='') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const res = await fetch(`/api/products?query=${query}`);
+    const res = await fetch(`/api/products?query=${query}&page=${page}`);
     const data = await res.json();
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {

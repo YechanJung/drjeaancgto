@@ -12,13 +12,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @api_view(['GET'])
 def getProducts(request):
     query = request.GET.get('query')
+    print ("query=", query) 
     if query == None:
         query = ''
     products = Product.objects.filter(name__icontains=query)
-
-    page = request.GET.get('page')
-    print ("pageaeaeae=", page)
-    paginator = Paginator(products, 2)
+    page = request.GET.get('page', 1) 
+    try:
+        page = int(page)
+    except:
+        page = 1
+    paginator = Paginator(products, 5)
+    print("pages=", paginator.num_pages)
     try:
         products = paginator.page(page)
     except PageNotAnInteger:
