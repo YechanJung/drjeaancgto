@@ -44,10 +44,6 @@ def addOrderItems(response):
             product.save()
         serializer = OrderSerializer(order, many=False)
 
-        # (1)create order
-        # (2)create shipping address
-        # (3)create order item and set order to orderItem relationship
-        # (4)update product countInStock
         return Response(serializer.data)
 
 
