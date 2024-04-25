@@ -73,7 +73,7 @@ function Filter() {
   {/* <Form.Label htmlFor="customRange1" className="form-label small-label" /> */}
 </div>
       <Form.Range />
-<InputGroup className="mb-2 small-input-group" sm>
+<InputGroup className="mb-1 small-input-group" xl>
   <InputGroup.Text>$</InputGroup.Text>
   <InputGroup.Text>0.00</InputGroup.Text>
   <Form.Control aria-label="Dollar amount (with dot and two decimal places)" />
